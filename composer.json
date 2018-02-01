@@ -1,0 +1,15 @@
+{
+    "name": "api/gingaone",
+    "description": "criando api para vaga gingaone",
+    "type": "twbs",
+    "require": {
+        "twbs/bootstrap": "^4.0"
+    },
+    "authors": [
+        {
+            "name": "Rodrigo Teles",
+            "email": "rtelesc@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
