@@ -18,10 +18,16 @@
 	
 
 	sem pesquisa
-	https://api.punkapi.com/v2/beers/random
+	https://api.punkapi.com/v2/beers/random&per_page=80
 	*/
 
-	$url = "https://api.punkapi.com/v2/beers/25";
+
+
+	$data = json_decode(file_get_contents('php://input'), true); 
+	$data = (array) $data;
+
+	$url = "https://api.punkapi.com/v2/beers?per_page=10";
+
 	$ch = curl_init();
 
 	$ip = '123.123.123.123'; // your client's IP Address
@@ -30,13 +36,21 @@
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array("REMOTE_ADDR: $ip",
                                             "X_FORWARDED_FOR: $ip"));
+	curl_setopt($ch, CURLOPT_VERBOSE, 1);
+	curl_setopt($ch, CURLOPT_HEADER, 1);
+
+
+	// Then, after your curl_exec call:
+
+
+
 
     $cAlljson = curl_exec($ch);
+
+    $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+	$header = substr($cAlljson, 0, $header_size);
+	$body = substr($cAlljson, $header_size);
     // liberar
     curl_close($ch);
 
-    $contador = $contador + 1;  // Contador para limite de requisições da API
-
-    // Decodifica o Json em Objeto
-    $cAlljson = json_decode($cAlljson);
-    $cAlljson = $cAlljson->data;
+    echo $body;
